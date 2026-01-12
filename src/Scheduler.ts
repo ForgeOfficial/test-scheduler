@@ -10,6 +10,10 @@ export class Scheduler {
         this._tasks.set(name, {period, action});
     }
 
+    deleteTask(name: string) {
+        this._tasks.delete(name);
+    }
+
     get tasks() {
         return this._tasks;
     }
