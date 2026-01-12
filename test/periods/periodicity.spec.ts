@@ -52,4 +52,24 @@ describe('Periodicity', () => {
             expect(periodicity.shouldRun(new Date())).toEqual(false);
         });
     });
+
+    describe(EveryDayAt.name, () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
+        });
+        afterEach(() => {
+            jest.useRealTimers();
+        });
+        it.each([2, 3, 6])('should run every day at', (day: number) => {
+            const periodicity = new EveryDayAt(5, 3);
+            jest.setSystemTime(new Date(2026, 0, day, 5, 3));
+            expect(periodicity.shouldRun(new Date())).toEqual(true);
+        });
+
+        it.each([2, 3, 6])('should not run every day at', (day: number) => {
+            const periodicity = new EveryDayAt(5, 3);
+            jest.setSystemTime(new Date(2026, 0, day, 5, 40));
+            expect(periodicity.shouldRun(new Date())).toEqual(false);
+        });
+    });
 });
