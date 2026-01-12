@@ -14,6 +14,12 @@ export class Scheduler {
         this._tasks.delete(name);
     }
 
+    update() {
+        for (const task of this._tasks.values()) {
+            task.action();
+        }
+    }
+
     get tasks() {
         return this._tasks;
     }
