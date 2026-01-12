@@ -21,5 +21,14 @@ describe(Scheduler.name, () => {
             scheduler.setTask("task1", undefined, () => {});
             expect(scheduler.tasks.get('task1')?.period).toEqual(undefined);
         });
+    });
+
+    describe('deleteTask', () => {
+        it('should remove task', () => {
+            const scheduler = new Scheduler();
+            scheduler.setTask("task1", null, () => {});
+            scheduler.deleteTask('task1');
+            expect(scheduler.tasks.has('task1')).toBeFalsy();
+        })
     })
 });
