@@ -60,3 +60,28 @@ export class EveryDayAt implements IPeriodicity {
         return false;
     }
 }
+
+export class EveryWeekdayAt implements IPeriodicity {
+    private lastRun: Date = new Date();
+    constructor(
+        private days: number[],
+        private hour: number,
+        private minute: number
+    ) {}
+
+    shouldRun(now: Date): boolean {
+        const day = now.getDay();
+        const key = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+        const lastRunKey = `${this.lastRun.getFullYear()}-${this.lastRun.getMonth()}-${this.lastRun.getDate()}`;
+        if (
+            this.days.includes(day) &&
+            now.getHours() === this.hour &&
+            now.getMinutes() === this.minute &&
+            lastRunKey !== key
+        ) {
+            this.lastRun = now;
+            return true;
+        }
+        return false;
+    }
+}
