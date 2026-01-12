@@ -14,15 +14,19 @@ describe('Periodicity', () => {
     })
 
     describe(EveryMinute.name, () => {
+        beforeAll(() => {
+            jest.useRealTimers();
+        });
+        afterAll(() => {
+            jest.useRealTimers();
+        });
         it.each([1, 2, 3, 4])('should run every minute', (minute: number) => {
-            jest.useFakeTimers();
             const periodicity = new EveryMinute();
             jest.setSystemTime(new Date(2026, 0, 1, 2, minute));
             expect(periodicity.shouldRun(new Date())).toEqual(true);
         });
 
         it.each([1, 2, 3, 4])('should not run every minute', (second: number) => {
-            jest.useFakeTimers();
             const periodicity = new EveryMinute();
             jest.setSystemTime(new Date(2026, 0, 1, 2, 1, second));
             expect(periodicity.shouldRun(new Date())).toEqual(true);
@@ -30,15 +34,19 @@ describe('Periodicity', () => {
     });
 
     describe(EveryHourAt.name, () => {
+        beforeAll(() => {
+            jest.useRealTimers();
+        });
+        afterAll(() => {
+            jest.useRealTimers();
+        });
         it.each([2, 3, 6])('should run every hour at', (hour: number) => {
-            jest.useFakeTimers();
             const periodicity = new EveryHourAt(5);
             jest.setSystemTime(new Date(2026, 0, 1, hour, 5));
             expect(periodicity.shouldRun(new Date())).toEqual(true);
         });
 
         it.each([2, 3, 6])('should not run every hour at', (minute: number) => {
-            jest.useFakeTimers();
             const periodicity = new EveryHourAt(5);
             jest.setSystemTime(new Date(2026, 0, 1, 2, minute));
             expect(periodicity.shouldRun(new Date())).toEqual(false);
