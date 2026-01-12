@@ -1,7 +1,11 @@
 export class Scheduler {
-    tasks: any[] = [];
+    private readonly _tasks: any[] = [];
 
     setTask(name: string, period: any, action: () => void) {
-        this.tasks.push({name, period, action});
+        this._tasks.push({name, period, action});
+    }
+
+    get tasks() {
+        return this._tasks;
     }
 }
