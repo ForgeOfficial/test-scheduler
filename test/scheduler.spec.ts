@@ -30,5 +30,15 @@ describe(Scheduler.name, () => {
             scheduler.deleteTask('task1');
             expect(scheduler.tasks.has('task1')).toBeFalsy();
         })
+    });
+
+    describe('update', () => {
+        it('should executes all tasks', () => {
+            const scheduler = new Scheduler();
+            const mockAction = jest.fn();
+            scheduler.setTask("task1", null, mockAction);
+            scheduler.update();
+            expect(mockAction).toHaveBeenCalled();
+        });
     })
 });
