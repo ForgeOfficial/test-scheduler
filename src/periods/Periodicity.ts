@@ -41,3 +41,22 @@ export class EveryHourAt implements IPeriodicity {
         return false;
     }
 }
+
+export class EveryDayAt implements IPeriodicity {
+    private lastRun: Date = new Date();
+    constructor(private hour: number, private minute: number) {}
+
+    shouldRun(now: Date): boolean {
+        const dateKey = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+        const lastRunDate = `${this.lastRun.getFullYear()}-${this.lastRun.getMonth()}-${this.lastRun.getDate()}`;
+        if (
+            now.getHours() === this.hour &&
+            now.getMinutes() === this.minute &&
+            lastRunDate !== dateKey
+        ) {
+            this.lastRun = now;
+            return true;
+        }
+        return false;
+    }
+}
