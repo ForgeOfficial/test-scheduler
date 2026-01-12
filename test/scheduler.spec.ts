@@ -5,4 +5,13 @@ describe(Scheduler.name, () => {
         const scheduler = new Scheduler();
         expect(scheduler).toBeDefined();
     });
-})
+
+    describe('setTask', () => {
+        it('should add task', () => {
+            const scheduler = new Scheduler();
+            scheduler.setTask("task1", null, () => {});
+            expect(scheduler.tasks.length).toEqual(1);
+            expect(scheduler.tasks[0].name).toEqual("task1");
+        });
+    })
+});
