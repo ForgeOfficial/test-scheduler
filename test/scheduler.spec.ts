@@ -10,17 +10,16 @@ describe(Scheduler.name, () => {
         it('should add task', () => {
             const scheduler = new Scheduler();
             scheduler.setTask("task1", null, () => {});
-            expect(scheduler.tasks.length).toEqual(1);
-            expect(scheduler.tasks[0].name).toEqual("task1");
+            expect(scheduler.tasks.size).toEqual(1);
+            expect(scheduler.tasks.has('task1')).toBeTruthy();
+            expect(scheduler.tasks.get('task1').period).toEqual(null);
         });
 
         it('should edit task if name already exist', () => {
             const scheduler = new Scheduler();
             scheduler.setTask("task1", null, () => {});
             scheduler.setTask("task1", undefined, () => {});
-            expect(scheduler.tasks.length).toEqual(1);
-            expect(scheduler.tasks[0].name).toEqual("task1");
-            expect(scheduler.tasks[0].period).toEqual(undefined);
+            expect(scheduler.tasks.get('task1').period).toEqual(undefined);
         });
     })
 });

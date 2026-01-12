@@ -1,8 +1,8 @@
 export class Scheduler {
-    private readonly _tasks: any[] = [];
+    private readonly _tasks: Map<string, any> = new Map();
 
     setTask(name: string, period: any, action: () => void) {
-        this._tasks.push({name, period, action});
+        this._tasks.set(name, {period, action});
     }
 
     get tasks() {
