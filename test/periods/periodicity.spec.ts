@@ -1,4 +1,4 @@
-import {Always, EveryHourAt, EveryMinute, Never} from "../../src/periods/Periodicity";
+import {Always, EveryDayAt, EveryHourAt, EveryMinute, Never} from "../../src/periods/Periodicity";
 
 describe('Periodicity', () => {
     describe(Always.name, () => {
@@ -14,10 +14,10 @@ describe('Periodicity', () => {
     })
 
     describe(EveryMinute.name, () => {
-        beforeAll(() => {
-            jest.useRealTimers();
+        beforeEach(() => {
+            jest.useFakeTimers();
         });
-        afterAll(() => {
+        afterEach(() => {
             jest.useRealTimers();
         });
         it.each([1, 2, 3, 4])('should run every minute', (minute: number) => {
@@ -34,10 +34,10 @@ describe('Periodicity', () => {
     });
 
     describe(EveryHourAt.name, () => {
-        beforeAll(() => {
-            jest.useRealTimers();
+        beforeEach(() => {
+            jest.useFakeTimers();
         });
-        afterAll(() => {
+        afterEach(() => {
             jest.useRealTimers();
         });
         it.each([2, 3, 6])('should run every hour at', (hour: number) => {
@@ -51,5 +51,5 @@ describe('Periodicity', () => {
             jest.setSystemTime(new Date(2026, 0, 1, 2, minute));
             expect(periodicity.shouldRun(new Date())).toEqual(false);
         });
-    })
+    });
 });
